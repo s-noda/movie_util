@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +19,8 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class StaticMovie extends Movie {
 
+	private BufferedImage thumbnail_buf;
+	
 	public StaticMovie() throws IOException{
 		this("hoge") ;
 	}
@@ -27,6 +30,8 @@ public class StaticMovie extends Movie {
 		this.thumbnail_path = path ;
 		this.thumbnail = ImageIO.read(new File(this.thumbnail_path));
 		if ( this.thumbnail == null ) throw new IOException() ;
+
+		this.thumbnail_buf = this.thumbnail;
 		this.width = this.thumbnail.getWidth() ;
 		this.height = this.thumbnail.getHeight() ;
 		this.inW = this.width;
@@ -63,6 +68,12 @@ public class StaticMovie extends Movie {
 	}
 	
 	public void time_update(double time) throws IOException {
+		if (time >= this.show_time
+				&& time - this.show_time < this.end_time - this.start_time) {
+			this.thumbnail = this.thumbnail_buf;
+		} else {
+			this.thumbnail = null ;
+		}
 	}
 
 	@Override
