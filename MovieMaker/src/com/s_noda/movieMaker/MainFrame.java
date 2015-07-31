@@ -224,13 +224,16 @@ public class MainFrame extends JFrame implements ComponentListener,
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		if (!MainFrame.slider.getValueIsAdjusting()) {
+		Long last_changed = (Long) MainFrame.slider.getClientProperty("last_changed_time");
+		if (!MainFrame.slider.getValueIsAdjusting() ||
+				last_changed == null || System.currentTimeMillis() - last_changed > 500) {
 			updateTextFieldValues();
 			double time = MainFrame.slider.getValue() / 100.0
 					* (MainFrame.end_time - MainFrame.start_time);
 			time_update(time);
 			Console.echo(time + "sec");
 			MainFrame.self.repaint();
+			MainFrame.slider.putClientProperty("last_changed_time", (Long)System.currentTimeMillis());
 		}
 	}
 
