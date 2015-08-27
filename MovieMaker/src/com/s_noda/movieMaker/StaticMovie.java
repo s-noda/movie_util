@@ -95,6 +95,8 @@ public class StaticMovie extends Movie {
 		this.start_time = Double.parseDouble(this.texts.get(4).getText());
 		this.end_time = Double.parseDouble(this.texts.get(5).getText());
 		this.show_time = Double.parseDouble(this.texts.get(6).getText());
+		this.inW = this.width;
+		this.inH = this.height; // not supported yet
 		
 		MainFrame.self.repaint();
 	}

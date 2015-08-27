@@ -62,7 +62,7 @@ public class Movie extends JFrame implements ActionListener, WindowListener {
 		this.end_time = MainFrame.end_time;
 		this.show_time = 0;
 		this.total_time = Double.MAX_VALUE ;
-		this.x = this.y = 100;
+		this.x = this.y = 0;
 		this.width = 300;
 		this.height = 30;
 		this.inX = this.inY = 0;
