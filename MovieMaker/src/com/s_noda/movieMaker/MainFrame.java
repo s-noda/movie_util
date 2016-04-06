@@ -89,6 +89,16 @@ public class MainFrame extends JFrame implements ComponentListener,
 		return ret;
 	}
 
+	public static void rmTmpDir() {
+		File f = new File(temp_path);
+		if (f.exists()) {
+			File[] files = f.listFiles();
+			for (int i = 0; i < files.length; i++)
+				files[i].delete();
+			// f.delete();
+		}
+	}
+
 	public MainFrame() {
 		getContentPane().setLayout(new BorderLayout());
 
@@ -131,7 +141,8 @@ public class MainFrame extends JFrame implements ComponentListener,
 
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				MainFrame.system("rm -rf .temp.*");
+				//MainFrame.system("rm -rf .temp.*");
+				MainFrame.rmTmpDir();
 				System.exit(0);
 			}
 		});
@@ -224,16 +235,18 @@ public class MainFrame extends JFrame implements ComponentListener,
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		Long last_changed = (Long) MainFrame.slider.getClientProperty("last_changed_time");
-		if (!MainFrame.slider.getValueIsAdjusting() ||
-				last_changed == null || System.currentTimeMillis() - last_changed > 500) {
+		Long last_changed = (Long) MainFrame.slider
+				.getClientProperty("last_changed_time");
+		if (!MainFrame.slider.getValueIsAdjusting() || last_changed == null
+				|| System.currentTimeMillis() - last_changed > 500) {
 			updateTextFieldValues();
 			double time = MainFrame.slider.getValue() / 100.0
 					* (MainFrame.end_time - MainFrame.start_time);
 			time_update(time);
 			Console.echo(time + "sec");
 			MainFrame.self.repaint();
-			MainFrame.slider.putClientProperty("last_changed_time", (Long)System.currentTimeMillis());
+			MainFrame.slider.putClientProperty("last_changed_time",
+					(Long) System.currentTimeMillis());
 		}
 	}
 
@@ -245,6 +258,8 @@ public class MainFrame extends JFrame implements ComponentListener,
 
 	@Override
 	public void run() {
+		System.out.println("remove temp files");
+		MainFrame.rmTmpDir();
 		System.out.println("generate static images");
 		System.out.println("painting");
 		int index = 0;
@@ -255,7 +270,7 @@ public class MainFrame extends JFrame implements ComponentListener,
 		for (double i = start_time; i < end_time; i++) {
 			for (double j = 0; j < frame_rate; j += this.speed) {
 				index++;
-				if ( index > total ) {
+				if (index > total) {
 					i = end_time;
 					break;
 				}
