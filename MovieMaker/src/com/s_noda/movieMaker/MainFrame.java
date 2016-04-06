@@ -254,8 +254,13 @@ public class MainFrame extends JFrame implements ComponentListener,
 		double total = (end_time - start_time) * (frame_rate / this.speed);
 		for (double i = start_time; i < end_time; i++) {
 			for (double j = 0; j < frame_rate; j += this.speed) {
+				index++;
+				if ( index > total ) {
+					i = end_time;
+					break;
+				}
 				System.out.print("[" + (index) + "]");
-				Console.echo("PAINTING : " + (index++) + " / " + total);
+				Console.echo("PAINTING : " + (index) + " / " + total);
 				time_update(i + j * 1.0 / frame_rate);
 				BufferedImage buf = new BufferedImage(
 						MainFrame.movie_panel.getWidth(),
@@ -270,10 +275,6 @@ public class MainFrame extends JFrame implements ComponentListener,
 							+ ".jpeg"));
 				} catch (IOException e1) {
 					e1.printStackTrace();
-				}
-				if ( index > total ) {
-					i = end_time;
-					break;
 				}
 			}
 			System.gc();
