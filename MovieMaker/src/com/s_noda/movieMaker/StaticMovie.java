@@ -1,6 +1,7 @@
 package com.s_noda.movieMaker;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -34,6 +35,12 @@ public class StaticMovie extends Movie {
 		this.thumbnail_buf = this.thumbnail;
 		this.width = this.thumbnail.getWidth() ;
 		this.height = this.thumbnail.getHeight() ;
+		MainFrame.self.setSize(new Dimension((int) Math
+				.max(MainFrame.width,
+						MainFrame.width - MainFrame.movie_panel.getWidth()
+								+ this.width), (int) Math.max(MainFrame.height,
+				MainFrame.height - MainFrame.movie_panel.getHeight()
+						+ this.height)));
 		this.inW = this.width;
 		this.inH = this.height;
 		this.value_names =  new String[] { "x", "y", "w", "h", "start",

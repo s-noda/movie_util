@@ -32,7 +32,7 @@ import javax.swing.event.ChangeListener;
 public class MainFrame extends JFrame implements ComponentListener,
 		ChangeListener, ActionListener, Runnable {
 
-	public static int width = 640, height = 480;
+	public static int width = 480, height = 320;
 	public static int frame_rate = 25;
 	public static Runtime run = Runtime.getRuntime();
 
